@@ -58,9 +58,7 @@ export default function App() {
   }, [liveName]);
 
   useEffect(() => {
-    const password = livePassword;
-
-    // 1. Liste des tests
+    const password = livePassword || "";
     const tests = [
       password.length >= 6,
       /[a-z]/.test(password),
@@ -68,8 +66,6 @@ export default function App() {
       /[0-9]/.test(password),
       /[!@#$%^&*(),.?":{}|<>]/.test(password),
     ];
-
-    // Nombre de tests valide
     const passedCount = tests.filter(Boolean).length;
 
     // Couleur en fonction du nombre valide
@@ -154,21 +150,23 @@ export default function App() {
           </div>
           <Dot size={20} color={borderPasswordColor} />
         </div>
-        <motion.button
-          disabled={passwordErrors && usernameErrors ? true : false}
-          whileTap={{ scale: 0.9 }}
-          className="w-full rounded-md h-12 flex justify-center items-center bg-pink-500 cursor-pointer disabled:cursor-not-allowed"
-        >
-          Become a Spaceship Member
-        </motion.button>
-        <motion.button
-          onClick={() => reset({ username: "", password: "" })}
-          type="button"
-          whileTap={{ scale: 0.9 }}
-          className="w-full rounded-md h-12 flex justify-center items-center bg-pink-500 cursor-pointer"
-        >
-          reset form
-        </motion.button>
+        <div className="flex flex-row-reverse gap-5">
+          <motion.button
+            disabled={passwordErrors || usernameErrors ? true : false}
+            whileTap={{ scale: 0.9 }}
+            className="w-full rounded-md h-12 flex justify-center items-center bg-black text-white disabled:bg-black/50 disabled:text-white/50 font-bold cursor-pointer disabled:cursor-not-allowed"
+          >
+            Submit
+          </motion.button>
+          <motion.button
+            onClick={() => reset({ username: "", password: "" })}
+            type="button"
+            whileTap={{ scale: 0.9 }}
+            className="w-full rounded-md h-12 flex justify-center text-white items-center font-bold bg-black cursor-pointer"
+          >
+            reset form
+          </motion.button>
+        </div>
       </form>
     </div>
   );
